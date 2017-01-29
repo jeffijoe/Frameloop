@@ -1,4 +1,5 @@
 ﻿using Frameloop.Properties;
+using Frameloop.Utils;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -17,6 +18,7 @@ namespace Frameloop
         private CancellationTokenSource cts;
         private Task task;
         private Bitmap defaultFrame;
+        private Bitmap loadingFrame;
 
         public event Action OnTogglePlay;
         public event Action OnFramesLoaded;
@@ -41,11 +43,14 @@ namespace Frameloop
         public MainViewModel()
         {
             this.Frames = new List<Bitmap>();
-            //this.defaultFrame = Resources.Frameloop;
+            this.defaultFrame = Resources.Frameloop;
+            this.loadingFrame = Resources.Loading;
             this.watcher = new FileSystemWatcher();
-            this.watcher.Created += (sender, evt) => this.LoadFrames();
-            this.watcher.Changed += (sender, evt) => this.LoadFrames();
-            this.watcher.Deleted += (sender, evt) => this.LoadFrames();
+            Action load = () => this.LoadFrames();
+            Action debounced = load.Debounce(500);
+            this.watcher.Created += (sender, evt) => debounced();
+            this.watcher.Changed += (sender, evt) => debounced();
+            this.watcher.Deleted += (sender, evt) => debounced();
             this.cts = new CancellationTokenSource();
             this.task = new Task(() => this.AdvanceFrames(), this.cts.Token, TaskCreationOptions.LongRunning);
             this.task.Start();
@@ -62,6 +67,11 @@ namespace Frameloop
 
         public void TogglePlay()
         {
+            if (string.IsNullOrEmpty(this.Folder))
+            {
+                return;
+            }
+
             this.Playing = !this.Playing;
             this.OnTogglePlay?.Invoke();
         }
@@ -70,12 +80,18 @@ namespace Frameloop
         {
             this.Loading = true;
             this.CurrentFrame = 0;
+            this.OnFrameChange();
             this.Frames.Clear();
             var files = Directory.GetFiles(this.Folder);
-            var frames = files.Select(f => new Bitmap(f));
+            var frames = files.Where(File.Exists).Select(f =>
+            {
+                var bytes = File.ReadAllBytes(f);
+                var ms = new MemoryStream(bytes);
+                return new Bitmap(ms);
+            });
             this.Frames.InsertRange(0, frames);
-            this.Loading = false;
             this.OnFramesLoaded?.Invoke();
+            this.Loading = false;
             this.SetFrame(1);
         }
 
@@ -116,6 +132,11 @@ namespace Frameloop
 
         public Bitmap GetFrame (int frameNumber)
         {
+            if (this.Loading)
+            {
+                return this.loadingFrame;
+            }
+
             if (this.CurrentFrame == 0 || this.FrameCount == 0)
             {
                 return this.defaultFrame;

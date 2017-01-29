@@ -34,22 +34,29 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.lblFps = new System.Windows.Forms.ToolStripLabel();
             this.txtFps = new System.Windows.Forms.ToolStripTextBox();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.btnTogglePlay = new System.Windows.Forms.ToolStripButton();
-            this.imageViewer = new System.Windows.Forms.PictureBox();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.imageViewer = new System.Windows.Forms.PictureBox();
             this.pnlBottom = new System.Windows.Forms.Panel();
             this.tbPosition = new System.Windows.Forms.TrackBar();
+            this.statusSpring = new System.Windows.Forms.ToolStripStatusLabel();
+            this.lblAbout = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.imageViewer)).BeginInit();
             this.statusStrip.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.imageViewer)).BeginInit();
             this.pnlBottom.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbPosition)).BeginInit();
             this.SuspendLayout();
             // 
             // toolStrip1
             // 
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnBrowse,
+            this.toolStripSeparator1,
+            this.lblFps,
+            this.txtFps,
+            this.btnTogglePlay});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(895, 25);
@@ -81,13 +88,7 @@
             // 
             this.txtFps.Name = "txtFps";
             this.txtFps.Size = new System.Drawing.Size(100, 25);
-            this.txtFps.Text = "24";
             this.txtFps.TextChanged += new System.EventHandler(this.txtFps_TextChanged);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
             // 
             // btnTogglePlay
             // 
@@ -100,39 +101,43 @@
             this.btnTogglePlay.Text = "Play";
             this.btnTogglePlay.Click += new System.EventHandler(this.btnTogglePlay_Click);
             // 
+            // statusStrip
+            // 
+            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.lblStatus,
+            this.statusSpring,
+            this.lblAbout});
+            this.statusStrip.Location = new System.Drawing.Point(0, 438);
+            this.statusStrip.Name = "statusStrip";
+            this.statusStrip.Size = new System.Drawing.Size(895, 22);
+            this.statusStrip.TabIndex = 1;
+            this.statusStrip.Text = "statusStrip1";
+            // 
+            // lblStatus
+            // 
+            this.lblStatus.Name = "lblStatus";
+            this.lblStatus.Size = new System.Drawing.Size(57, 17);
+            this.lblStatus.Text = "Waiting...";
+            // 
             // imageViewer
             // 
             this.imageViewer.BackColor = System.Drawing.Color.White;
             this.imageViewer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.imageViewer.Location = new System.Drawing.Point(0, 25);
             this.imageViewer.Name = "imageViewer";
-            this.imageViewer.Size = new System.Drawing.Size(895, 435);
+            this.imageViewer.Size = new System.Drawing.Size(895, 413);
             this.imageViewer.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.imageViewer.TabIndex = 2;
             this.imageViewer.TabStop = false;
-            // 
-            // statusStrip
-            // 
-            this.statusStrip.Location = new System.Drawing.Point(0, 438);
-            this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(895, 22);
-            this.statusStrip.TabIndex = 3;
-            this.statusStrip.Text = "statusStrip1";
-            // 
-            // lblStatus
-            // 
-            this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(54, 17);
-            this.lblStatus.Text = "Waiting..";
             // 
             // pnlBottom
             // 
             this.pnlBottom.Controls.Add(this.tbPosition);
             this.pnlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnlBottom.Location = new System.Drawing.Point(0, 393);
+            this.pnlBottom.Location = new System.Drawing.Point(0, 394);
             this.pnlBottom.Name = "pnlBottom";
-            this.pnlBottom.Size = new System.Drawing.Size(895, 45);
-            this.pnlBottom.TabIndex = 4;
+            this.pnlBottom.Size = new System.Drawing.Size(895, 44);
+            this.pnlBottom.TabIndex = 3;
             // 
             // tbPosition
             // 
@@ -140,10 +145,22 @@
             this.tbPosition.Location = new System.Drawing.Point(0, 0);
             this.tbPosition.Minimum = 1;
             this.tbPosition.Name = "tbPosition";
-            this.tbPosition.Size = new System.Drawing.Size(895, 45);
+            this.tbPosition.Size = new System.Drawing.Size(895, 44);
             this.tbPosition.TabIndex = 0;
             this.tbPosition.Value = 1;
             this.tbPosition.ValueChanged += new System.EventHandler(this.tbPosition_ValueChanged);
+            // 
+            // statusSpring
+            // 
+            this.statusSpring.Name = "statusSpring";
+            this.statusSpring.Size = new System.Drawing.Size(482, 17);
+            this.statusSpring.Spring = true;
+            // 
+            // lblAbout
+            // 
+            this.lblAbout.Name = "lblAbout";
+            this.lblAbout.Size = new System.Drawing.Size(341, 17);
+            this.lblAbout.Text = "Created by Jeff Hansen - follow me! https://twitter.com/Jeffijoe";
             // 
             // MainForm
             // 
@@ -151,18 +168,20 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(895, 460);
             this.Controls.Add(this.pnlBottom);
-            this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.imageViewer);
+            this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.toolStrip1);
+            this.KeyPreview = true;
             this.Name = "MainForm";
             this.Text = "Frameloop";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.frmMain_Load);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyUp);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.imageViewer)).EndInit();
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.imageViewer)).EndInit();
             this.pnlBottom.ResumeLayout(false);
             this.pnlBottom.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbPosition)).EndInit();
@@ -176,15 +195,15 @@
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton btnBrowse;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripButton btnTogglePlay;
-        private System.Windows.Forms.PictureBox imageViewer;
-        private System.Windows.Forms.StatusStrip statusStrip;
-        private System.Windows.Forms.ToolStripStatusLabel lblStatus;
-        private System.Windows.Forms.Panel pnlBottom;
-        private System.Windows.Forms.TrackBar tbPosition;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripLabel lblFps;
         private System.Windows.Forms.ToolStripTextBox txtFps;
+        private System.Windows.Forms.ToolStripButton btnTogglePlay;
+        private System.Windows.Forms.StatusStrip statusStrip;
+        private System.Windows.Forms.ToolStripStatusLabel lblStatus;
+        private System.Windows.Forms.PictureBox imageViewer;
+        private System.Windows.Forms.Panel pnlBottom;
+        private System.Windows.Forms.TrackBar tbPosition;
+        private System.Windows.Forms.ToolStripStatusLabel statusSpring;
+        private System.Windows.Forms.ToolStripStatusLabel lblAbout;
     }
 }
-

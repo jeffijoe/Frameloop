@@ -23,11 +23,12 @@ namespace Frameloop
             this.vm.OnFrameChange += () => Dispatch(this.OnFrameChange);
             this.vm.OnFrameRateChange += () => Dispatch(this.OnFrameRateChange);
             this.vm.OnFramesLoaded += () => Dispatch(this.OnFramesLoaded);
-            
+
             // Sync initial UI state.
             this.OnFrameRateChange();
             this.OnTogglePlay();
             this.OnFolderChange();
+            this.OnFrameChange();
         }
 
         private void OnFramesLoaded()
@@ -49,8 +50,16 @@ namespace Frameloop
         private void OnFrameChange()
         {
             this.imageViewer.Image = this.vm.GetCurrentFrame();
+            if (this.vm.FrameCount == 0)
+            {
+                return;
+            }
+
             this.lblStatus.Text = $"Frame #{this.vm.CurrentFrame} / {this.vm.FrameCount}";
-            this.tbPosition.Value = this.vm.CurrentFrame;
+            if (this.vm.CurrentFrame != 0)
+            {
+                this.tbPosition.Value = this.vm.CurrentFrame;
+            }
         }
 
         private void OnTogglePlay()
@@ -61,7 +70,8 @@ namespace Frameloop
 
         private void OnFolderChange()
         {
-            this.Text = $"Frameloop ({this.vm.Folder})";
+            this.Text = string.IsNullOrEmpty(this.vm.Folder) ? "Frameloop" : $"Frameloop ({this.vm.Folder})";
+            this.btnTogglePlay.Enabled = !string.IsNullOrEmpty(this.vm.Folder);
         }
 
         private void frmMain_Load(object sender, EventArgs e)
@@ -69,7 +79,7 @@ namespace Frameloop
 
         }
 
-        private void Dispatch (Action action)
+        private void Dispatch(Action action)
         {
             this.Invoke(action);
         }
@@ -119,6 +129,14 @@ namespace Frameloop
             }
 
             this.vm.SetFrame(this.tbPosition.Value);
+        }
+
+        private void MainForm_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Space)
+            {
+                this.vm.TogglePlay();
+            }
         }
     }
 }
