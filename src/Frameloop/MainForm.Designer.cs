@@ -137,8 +137,8 @@
             // lblAbout
             // 
             this.lblAbout.Name = "lblAbout";
-            this.lblAbout.Size = new System.Drawing.Size(341, 17);
-            this.lblAbout.Text = "Created by Jeff Hansen - follow me! https://twitter.com/Jeffijoe";
+            this.lblAbout.Size = new System.Drawing.Size(128, 17);
+            this.lblAbout.Text = "Created by Jeff Hansen";
             // 
             // imageViewer
             // 
@@ -248,7 +248,6 @@
             this.Name = "MainForm";
             this.Text = "Frameloop";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
-            this.Load += new System.EventHandler(this.frmMain_Load);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyUp);
             this.mainToolStrip.ResumeLayout(false);
             this.mainToolStrip.PerformLayout();

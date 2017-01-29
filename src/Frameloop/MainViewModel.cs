@@ -93,6 +93,11 @@ namespace Frameloop
             this.Loading = true;
             this.CurrentFrame = 0;
             this.OnFrameChange();
+            foreach (var f in this.Frames)
+            {
+                f.Dispose();
+            }
+
             this.Frames.Clear();
             var files = Directory.GetFiles(this.Folder);
             var frames = files.Where(File.Exists).Select(f =>
@@ -112,6 +117,11 @@ namespace Frameloop
             if (this.FrameRate == frameRate)
             {
                 return;
+            }
+
+            if (frameRate == 0)
+            {
+                frameRate = 1;
             }
 
             this.FrameRate = frameRate;

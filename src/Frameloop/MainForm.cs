@@ -79,7 +79,6 @@ namespace Frameloop
                 return;
             }
 
-            this.lblStatus.Text = $"Frame #{this.vm.CurrentFrame} / {this.vm.FrameCount}";
             if (this.vm.CurrentFrame != 0)
             {
                 this.tbPosition.Value = this.vm.CurrentFrame;
@@ -95,17 +94,20 @@ namespace Frameloop
         private void OnFolderChange()
         {
             this.Text = string.IsNullOrEmpty(this.vm.Folder) ? "Frameloop" : $"Frameloop ({this.vm.Folder})";
+            this.lblStatus.Text = string.IsNullOrEmpty(this.vm.Folder) ? "Waiting" : this.vm.Folder;
             this.btnTogglePlay.Enabled = !string.IsNullOrEmpty(this.vm.Folder);
-        }
-
-        private void frmMain_Load(object sender, EventArgs e)
-        {
-
         }
 
         private void Dispatch(Action action)
         {
-            this.Invoke(action);
+            if (this.InvokeRequired)
+            {
+                this.BeginInvoke(action);
+            }
+            else
+            {
+                action();
+            }
         }
 
         private void btnBrowse_Click(object sender, EventArgs e)
