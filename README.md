@@ -2,7 +2,7 @@
 
 A simple frame animation previewer for Windows.
 
-![Preview](/jeffijoe/frameloop/blob/master/preview.gif)
+![Preview](/preview.gif)
 
 # Get it
 
