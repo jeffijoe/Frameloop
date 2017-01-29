@@ -17,18 +17,42 @@ namespace Frameloop
         public MainForm()
         {
             InitializeComponent();
+            // Viewmodel setup
             this.vm = new MainViewModel();
             this.vm.OnFolderChange += () => Dispatch(this.OnFolderChange);
             this.vm.OnTogglePlay += () => Dispatch(this.OnTogglePlay);
             this.vm.OnFrameChange += () => Dispatch(this.OnFrameChange);
             this.vm.OnFrameRateChange += () => Dispatch(this.OnFrameRateChange);
             this.vm.OnFramesLoaded += () => Dispatch(this.OnFramesLoaded);
+            this.vm.OnVisibleControlsChange += () => Dispatch(this.OnVisibleControlsChange);
+
+            // UI setup
+            this.miToolbar.Click += (e, s) => this.vm.ToggleControl(Control.Toolbar);
+            this.miToggleTracker.Click += (e, s) => this.vm.ToggleControl(Control.Tracker);
+            this.exitToolStripMenuItem.Click += (e, s) => Application.Exit();
+            this.aboutToolStripMenuItem.Click += (e, s) =>
+            {
+                AboutForm.Show();
+            };
 
             // Sync initial UI state.
             this.OnFrameRateChange();
             this.OnTogglePlay();
             this.OnFolderChange();
             this.OnFrameChange();
+            this.OnVisibleControlsChange();
+        }
+
+        private void OnVisibleControlsChange()
+        {
+            var tracker = this.vm.IsControlVisible(Control.Tracker);
+            var toolbar = this.vm.IsControlVisible(Control.Toolbar);
+
+            this.miToggleTracker.Checked = tracker;
+            this.pnlBottom.Visible = tracker;
+
+            this.mainToolStrip.Visible = toolbar;
+            this.miToolbar.Checked = toolbar;
         }
 
         private void OnFramesLoaded()

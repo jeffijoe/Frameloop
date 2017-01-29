@@ -1,0 +1,11 @@
+# Frameloop
+
+A simple frame animation previewer for Windows.
+
+# Get it
+
+Go to [Releases](https://github.com/jeffijoe/frameloop/releases) and download the latest version of `Frameloop.exe`.
+
+# Author
+
+Jeff Hansen - [@Jeffijoe](https://twitter.com/Jeffijoe)

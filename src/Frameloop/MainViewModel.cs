@@ -12,6 +12,12 @@ using System.Threading.Tasks;
 
 namespace Frameloop
 {
+    public enum Control
+    {
+        Tracker,
+        Toolbar
+    }
+
     public class MainViewModel
     {
         private FileSystemWatcher watcher;
@@ -19,12 +25,18 @@ namespace Frameloop
         private Task task;
         private Bitmap defaultFrame;
         private Bitmap loadingFrame;
+        private readonly List<Control> visibleControls = new List<Control>
+        {
+            Control.Tracker,
+            Control.Toolbar
+        };
 
         public event Action OnTogglePlay;
         public event Action OnFramesLoaded;
         public event Action OnFrameRateChange;
         public event Action OnFrameChange;
         public event Action OnFolderChange;
+        public event Action OnVisibleControlsChange;
 
         public int CurrentFrame { get; private set; }
 
@@ -148,6 +160,25 @@ namespace Frameloop
         public Bitmap GetCurrentFrame()
         {
             return this.GetFrame(this.CurrentFrame);
+        }
+
+        public bool IsControlVisible(Control control)
+        {
+            return this.visibleControls.Contains(control);
+        }
+
+        public void ToggleControl(Control control)
+        {
+            if (this.IsControlVisible(control))
+            {
+                this.visibleControls.Remove(control);
+            }
+            else
+            {
+                this.visibleControls.Add(control);
+            }
+
+            this.OnVisibleControlsChange?.Invoke();
         }
 
         public void Quit ()
